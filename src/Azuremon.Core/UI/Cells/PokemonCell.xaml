@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolkit"
+             xmlns:converters="clr-namespace:Azuremon.Core.UI.Converters;assembly=Azuremon.Core"
+             xmlns:controls="clr-namespace:Azuremon.Core.UI.Controls;assembly=Azuremon.Core"
+             x:Name="PokemonCell"
+             x:Class="Azuremon.Core.UI.Cells.PokemonCellView">
+  <ContentView.Resources>
+    <ResourceDictionary>
+      <toolkit:HexToColorConverter x:Key="StringToColorConverter" />
+      <toolkit:UpperTextConverter x:Key="UpperTextConverter"/>
+      <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+      <converters:IsFilledIconConverter x:Key="IsFilledIconConverter" />
+      <converters:PokeUrlImageConverter x:Key="PokeUrlImageConverter" />
+    </ResourceDictionary>
+  </ContentView.Resources>
+  <Grid Padding="{DynamicResource StandardPadding}"
+        ColumnSpacing="{StaticResource StandardSpacing}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="80"/>
+      <ColumnDefinition Width="30"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="30"/>
+    </Grid.ColumnDefinitions>
+
+    <Image Grid.Row="0" Grid.RowSpan="2" Source="{Binding Name, Converter={StaticResource PokeUrlImageConverter}}"/>
+
+    <Label Grid.Column="1" Grid.Row="0"
+           Grid.ColumnSpan="2"
+           Text="{Binding Name}"
+           Style="{DynamicResource AppListItemTextStyle}"
+           StyleId="PokemonName"/>
+
+    <Label Grid.Column="1" Grid.Row="1"
+           WidthRequest="30"
+           VerticalOptions="Center"
+           Text="{Binding Number, StringFormat='#{0:000}'}"
+           Style="{DynamicResource AppListItemDetailTextStyle}"
+           StyleId="PokemonNumber"/>
+
+    <controls:FavoriteImage  StyleId="FavoriteButton"
+            Grid.Column="3"
+            Grid.Row="0"
+            Source="{Binding IsFavorite, Converter={StaticResource IsFilledIconConverter}, ConverterParameter='heart'}"
+            HorizontalOptions="End" VerticalOptions="Start" Aspect="AspectFit">
+      <controls:FavoriteImage.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding Path=FavoriteCommand, Source={x:Reference PokemonCell}}"
+                              CommandParameter="{Binding .}"/>
+      </controls:FavoriteImage.GestureRecognizers>
+    </controls:FavoriteImage>
+    
+    <StackLayout
+      Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
+      Orientation="Horizontal"
+      HorizontalOptions="EndAndExpand"
+      VerticalOptions="Center"
+      HeightRequest="48"
+                Padding="0,4"
+      >
+      <Grid IsVisible="{Binding MainCategory, Converter={StaticResource NullToBooleanConverter}}">
+        <BoxView
+                 BackgroundColor="{Binding MainCategory.Color, Converter={StaticResource StringToColorConverter}}"
+                 VerticalOptions="Center"
+                 HorizontalOptions="FillAndExpand"
+                 HeightRequest="24">
+        </BoxView>
+        <StackLayout Padding="10,0" VerticalOptions="Center">
+          <Label   VerticalOptions="Center"
+                      VerticalTextAlignment ="Center"
+                      HorizontalOptions="FillAndExpand"
+                      HorizontalTextAlignment="Center"
+                      FontSize="Micro"
+                      TextColor="White"
+                      Text="{Binding MainCategory.Name, Converter={StaticResource UpperTextConverter}}"/>
+        </StackLayout>
+      </Grid>
+      <Grid IsVisible="{Binding SecondaryCategory, Converter={StaticResource NullToBooleanConverter}}">
+        <BoxView
+                 BackgroundColor="{Binding SecondaryCategory.Color, Converter={StaticResource StringToColorConverter}}"
+                 VerticalOptions="Center"
+                 HorizontalOptions="FillAndExpand"
+                 HeightRequest="24">
+        </BoxView>
+        <StackLayout Padding="10,0" VerticalOptions="Center">
+          <Label   VerticalOptions="Center"
+                      VerticalTextAlignment ="Center"
+                      HorizontalOptions="FillAndExpand"
+                      HorizontalTextAlignment="Center"
+                      FontSize="Micro"
+                      TextColor="White"
+                      Text="{Binding SecondaryCategory.Name, Converter={StaticResource UpperTextConverter}}"/>
+        </StackLayout>
+      </Grid>
+    </StackLayout>
+   
+  </Grid>
+</ContentView>

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolkit"
+             xmlns:converters="clr-namespace:Azuremon.Core.UI.Converters;assembly=Azuremon.Core"
+             xmlns:controls="clr-namespace:Azuremon.Core.UI.Controls;assembly=Azuremon.Core"
+             x:Class="Azuremon.Core.UI.Pages.Pokedex.PokemonDetailsPage"
+             Title="{Binding Pokemon.Name}"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <toolkit:HexToColorConverter x:Key="StringToColorConverter" />
+      <toolkit:UpperTextConverter x:Key="UpperTextConverter"/>
+      <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+      <converters:IsFilledIconConverter x:Key="IsFilledIconConverter" />
+      <converters:PokeUrlImageConverter x:Key="PokeUrlImageConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="200" x:Name="Row1Header"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid RowSpacing="0" ColumnSpacing="0" x:Name="HeaderView" BackgroundColor="White">
+        <Image
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand"
+          Source="{Binding Pokemon.Name, Converter={StaticResource PokeUrlImageConverter}}"
+          />
+        <controls:FavoriteImage  StyleId="FavoriteButton"
+              Margin="{DynamicResource StandardPadding}"
+              Source="{Binding Pokemon.IsFavorite, Converter={StaticResource IsFilledIconConverter}, ConverterParameter='heart'}"
+                                 WidthRequest="30" HeightRequest="30"
+              HorizontalOptions="End" VerticalOptions="Start" Aspect="AspectFit">
+          <controls:FavoriteImage.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Path=FavoriteCommand}"
+                                  CommandParameter="{Binding Pokemon}"/>
+          </controls:FavoriteImage.GestureRecognizers>
+        </controls:FavoriteImage>
+    </Grid>
+    <ScrollView Grid.Row="1" Padding="{DynamicResource MediumPadding}">
+
+      <StackLayout Orientation="Vertical">
+
+        <controls:CardView Margin="0,10">
+          <StackLayout Spacing="0">
+            <Label Text="Categories" Style="{DynamicResource SectionLabelTextStyle}" />
+            <controls:HeaderDivider />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="{DynamicResource StandardPadding}">
+              <Grid IsVisible="{Binding Pokemon.MainCategory, Converter={StaticResource NullToBooleanConverter}}">
+                <BoxView
+                         BackgroundColor="{Binding Pokemon.MainCategory.Color, Converter={StaticResource StringToColorConverter}}"
+                         VerticalOptions="Center"
+                         HorizontalOptions="FillAndExpand"
+                         HeightRequest="24">
+                </BoxView>
+                <StackLayout Padding="16,0" VerticalOptions="Center">
+                  <Label   VerticalOptions="Center"
+                              VerticalTextAlignment ="Center"
+                              HorizontalOptions="FillAndExpand"
+                              HorizontalTextAlignment="Center"
+                              TextColor="White"
+                              Text="{Binding Pokemon.MainCategory.Name, Converter={StaticResource UpperTextConverter}}"/>
+                </StackLayout>
+              </Grid>
+              <Grid IsVisible="{Binding Pokemon.SecondaryCategory, Converter={StaticResource NullToBooleanConverter}}">
+                <BoxView
+                         BackgroundColor="{Binding Pokemon.SecondaryCategory.Color, Converter={StaticResource StringToColorConverter}}"
+                         VerticalOptions="Center"
+                         HorizontalOptions="FillAndExpand"
+                         HeightRequest="24">
+                </BoxView>
+                <StackLayout Padding="16,0" VerticalOptions="Center">
+                  <Label   VerticalOptions="Center"
+                              VerticalTextAlignment ="Center"
+                              HorizontalOptions="FillAndExpand"
+                              HorizontalTextAlignment="Center"
+                              TextColor="White"
+                              Text="{Binding Pokemon.SecondaryCategory.Name, Converter={StaticResource UpperTextConverter}}"/>
+                </StackLayout>
+              </Grid>
+            </StackLayout>
+          </StackLayout>
+        </controls:CardView>
+
+        <controls:CardView Margin="0,10">
+          <StackLayout Spacing="0">
+            <Label Text="Stats" Style="{DynamicResource SectionLabelTextStyle}" />
+            <controls:HeaderDivider />
+            <Grid Margin="{DynamicResource StandardPadding}">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyleBold}" Text="Stamina"/>
+              <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyleBold}" Text="Attack"/>
+              <Label Grid.Row="0" Grid.Column="2" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyleBold}" Text="Defense"/>
+
+              <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.Stamina}"/>
+              <Label Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.Attack}"/>
+              <Label Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.Defense}"/>
+            </Grid>
+          </StackLayout>
+        </controls:CardView>
+
+        <controls:CardView Margin="0,10">
+          <StackLayout Spacing="0">
+            <Label Text="Game-Play" Style="{DynamicResource SectionLabelTextStyle}" />
+            <controls:HeaderDivider />
+            <Grid Margin="{DynamicResource StandardPadding}">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyleBold}" Text="Capture-Rate"/>
+              <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyleBold}" Text="Flee-Rate"/>
+              <Label Grid.Row="0" Grid.Column="2" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyleBold}" Text="Candy"/>
+
+              <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.CaptureRate, StringFormat='{0}%'}"/>
+              <Label Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.FleeRate, StringFormat='{0}%'}"/>
+              <Label Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.Candy}"/>
+            </Grid>
+          </StackLayout>
+        </controls:CardView>
+
+        <controls:CardView Margin="0,10">
+          <StackLayout Spacing="0">
+            <Label Text="Attacks" Style="{DynamicResource SectionLabelTextStyle}" />
+            <controls:HeaderDivider />
+            <StackLayout Margin="{DynamicResource StandardPadding}" Orientation="Vertical">
+              <Label VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.QuickMoves}"/>
+              <Label VerticalOptions="Center" Style="{DynamicResource AppListItemTextStyle}" Text="{Binding Pokemon.SpecialMoves}"/>
+            </StackLayout>
+          </StackLayout>
+        </controls:CardView>
+
+      </StackLayout>
+
+
+    </ScrollView>
+
+  </Grid>
+</ContentPage>

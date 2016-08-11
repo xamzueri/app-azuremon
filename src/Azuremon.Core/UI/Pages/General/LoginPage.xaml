@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Azuremon.Core.UI.Pages.General.LoginPage"
+             BackgroundColor="{DynamicResource WindowBackground}">
+  <ScrollView>
+    <Grid RowSpacing="{StaticResource MediumSpacing}"
+          ColumnSpacing="{StaticResource MediumSpacing}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <StackLayout Spacing="0" Padding="0">
+        <StackLayout>
+          <StackLayout.Spacing>
+            <OnPlatform x:TypeArguments="x:Double" Android="12" iOS="30" WinPhone="12"/>
+          </StackLayout.Spacing>
+          <StackLayout.Padding>
+            <OnPlatform x:TypeArguments="Thickness" Android="32,24,32,24" iOS="16,24,16,24" WinPhone="32,24"/>
+          </StackLayout.Padding>
+
+          <Label HorizontalTextAlignment="Center"
+                 HorizontalOptions="FillAndExpand"
+                 StyleId="LoginPageIdentifier"
+                 Style="{DynamicResource AppListItemTextStyle}"
+                 LineBreakMode="WordWrap"
+                 FontSize="Large"
+                 TextColor="{DynamicResource DetailTextColor}"
+                 Text="Sign in with either your Google, Facebook, Twitter or Microsoft account to save and sync favorite Pokemon.">
+
+            <Label.FontSize>
+              <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="15" WinPhone="15"/>
+            </Label.FontSize>
+          </Label>
+        </StackLayout>
+
+        <StackLayout>
+          <StackLayout.Padding>
+            <OnPlatform x:TypeArguments="Thickness" Android="32,16,32,0" iOS="32,25,32,0" WinPhone="32,16,32,0"/>
+          </StackLayout.Padding>
+          <StackLayout.Spacing>
+            <OnPlatform x:TypeArguments="x:Double" Android="0" iOS="16" WinPhone="10"/>
+          </StackLayout.Spacing>
+          <AbsoluteLayout HorizontalOptions="FillAndExpand">
+            <Button
+                Text="Sign-in via Microsoft"
+                Command="{Binding LoginCommand}"
+                CommandParameter="MicrosoftAccount"
+                HorizontalOptions="FillAndExpand"
+                IsEnabled="{Binding IsNotBusy}"
+                StyleId="SignInButton"
+                TextColor="{StaticResource LabelSectionText}"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="White">
+
+              <Button.FontAttributes>
+                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+              </Button.FontAttributes>
+              <Button.BorderWidth>
+                <OnPlatform x:TypeArguments="x:Double" iOS="1"/>
+              </Button.BorderWidth>
+              <Button.BorderColor>
+                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
+              </Button.BorderColor>
+            </Button>
+            <Image Source="microsoft.png" AbsoluteLayout.LayoutBounds="0,.5,40,40"
+                  AbsoluteLayout.LayoutFlags="PositionProportional">
+              <Image.Margin>
+                <OnPlatform x:TypeArguments="Thickness" iOS="{StaticResource SmallPadding}" Android="{StaticResource MediumPadding}" WinPhone="{StaticResource SmallPadding}"/>
+              </Image.Margin>
+            </Image>
+          </AbsoluteLayout>
+          <AbsoluteLayout HorizontalOptions="FillAndExpand">
+            <Button
+                   Text="Sign-in via Google"
+                   Command="{Binding LoginCommand}"
+                   CommandParameter="Google"
+                   HorizontalOptions="FillAndExpand"
+                   IsEnabled="{Binding IsNotBusy}"
+                   StyleId="SignInButton"
+                   TextColor="White"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                   BackgroundColor="#DC4E41">
+
+              <Button.FontAttributes>
+                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+              </Button.FontAttributes>
+            </Button>
+            <Image Source="google.png" AbsoluteLayout.LayoutBounds="0,.5,40,40"
+                AbsoluteLayout.LayoutFlags="PositionProportional">
+              <Image.Margin>
+                <OnPlatform x:TypeArguments="Thickness" iOS="{StaticResource SmallPadding}" Android="{StaticResource MediumPadding}" WinPhone="{StaticResource SmallPadding}"/>
+              </Image.Margin>
+            </Image>
+          </AbsoluteLayout>
+
+          <AbsoluteLayout>
+            <Button
+                   Text="Sign-in via Facebook"
+                   Command="{Binding LoginCommand}"
+                   CommandParameter="Facebook"
+                   HorizontalOptions="FillAndExpand"
+                   IsEnabled="{Binding IsNotBusy}"
+                   StyleId="SignInButton"
+                   TextColor="White"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                  AbsoluteLayout.LayoutFlags="All"
+                   BackgroundColor="#3b5998">
+
+              <Button.FontAttributes>
+                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+              </Button.FontAttributes>
+            </Button>
+            <Image Source="facebook.png" AbsoluteLayout.LayoutBounds="0,.5,40,40"
+                  AbsoluteLayout.LayoutFlags="PositionProportional">
+              <Image.Margin>
+                <OnPlatform x:TypeArguments="Thickness" iOS="{StaticResource SmallPadding}" Android="{StaticResource MediumPadding}" WinPhone="{StaticResource SmallPadding}"/>
+              </Image.Margin>
+            </Image>
+          </AbsoluteLayout>
+          <AbsoluteLayout>
+            <Button
+                   Text="Sign-in via Twitter"
+                   Command="{Binding LoginCommand}"
+                   CommandParameter="Twitter"
+                   HorizontalOptions="FillAndExpand"
+                   IsEnabled="{Binding IsNotBusy}"
+                   StyleId="SignInButton"
+                   TextColor="White"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                   BackgroundColor="#33ccff">
+              <Button.FontAttributes>
+                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+              </Button.FontAttributes>
+            </Button>
+            <Image Source="twitter.png" AbsoluteLayout.LayoutBounds="0,.5,40,40"
+                    AbsoluteLayout.LayoutFlags="PositionProportional">
+              <Image.Margin>
+                <OnPlatform x:TypeArguments="Thickness" iOS="{StaticResource SmallPadding}" Android="{StaticResource MediumPadding}" WinPhone="{StaticResource SmallPadding}"/>
+              </Image.Margin>
+            </Image>
+          </AbsoluteLayout>
+          <Button
+                 Text="Not Now"
+                 Command="{Binding CancelCommand}"
+                 IsEnabled="{Binding IsNotBusy}"
+                 StyleId="NotNowButton">
+
+            <Button.FontAttributes>
+              <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+            </Button.FontAttributes>
+            <Button.BackgroundColor>
+              <OnPlatform x:TypeArguments="Color" iOS="Transparent"/>
+            </Button.BackgroundColor>
+            <Button.TextColor>
+              <OnPlatform x:TypeArguments="Color" iOS="{StaticResource PrimaryDark}"/>
+            </Button.TextColor>
+            <Button.BorderWidth>
+              <OnPlatform x:TypeArguments="x:Double" iOS="1"/>
+            </Button.BorderWidth>
+            <Button.BorderColor>
+              <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
+            </Button.BorderColor>
+          </Button>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Grid.Row="1" Padding="16,0" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="Center">
+        <ActivityIndicator IsRunning="{Binding IsBusy}">
+          <ActivityIndicator.Color>
+            <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
+          </ActivityIndicator.Color>
+        </ActivityIndicator>
+        <Label Text="{Binding Message}" VerticalOptions="Center"  HorizontalOptions="Center" Style="{DynamicResource AppListItemTextStyle}"/>
+      </StackLayout>
+
+    </Grid>
+  </ScrollView>
+</ContentPage>
